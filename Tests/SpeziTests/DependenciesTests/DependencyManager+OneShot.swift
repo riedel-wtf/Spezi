@@ -10,6 +10,7 @@
 import XCTest
 
 
+@available(iOS 17, *)
 extension DependencyManager {
     static func resolve(_ modules: [any Module]) throws -> [any Module] {
         let dependencyManager = DependencyManager(modules)

@@ -15,6 +15,7 @@ import Testing
 struct ViewModifierTests {
     @MainActor
     @Test("ViewModifier Retrieval")
+    @available(iOS 17, *)
     func testViewModifierRetrieval() async {
         await confirmation { confirmation in
             let testApplicationDelegate = TestApplicationDelegate(confirmation: confirmation)
@@ -31,6 +32,7 @@ struct ViewModifierTests {
     }
 
     @MainActor
+    @available(iOS 17, *)
     func testEmptyRetrieval() {
         let speziAppDelegate = SpeziAppDelegate()
         #expect(speziAppDelegate.spezi.viewModifiers.isEmpty)

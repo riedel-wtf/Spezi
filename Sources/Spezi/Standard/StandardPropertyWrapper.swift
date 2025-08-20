@@ -37,6 +37,7 @@ public class _StandardPropertyWrapper<Constraint> {
 }
 
 
+@available(iOS 17, *)
 extension _StandardPropertyWrapper: SpeziPropertyWrapper {
     func inject(spezi: Spezi) throws(SpeziPropertyError) {
         guard let standard = spezi.standard as? Constraint else {

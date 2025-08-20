@@ -9,6 +9,7 @@
 import RuntimeAssertions
 
 
+@available(iOS 17, *)
 protocol AnyDependencyContext: DependencyDeclaration {
     func retrieve<M>(dependency: M.Type) -> M
 
@@ -43,6 +44,7 @@ enum DependencyType {
 }
 
 
+@available(iOS 17, *)
 class DependencyContext<Dependency: Module>: AnyDependencyContext {
     private let type: DependencyType
     private let defaultValue: (() -> Dependency)?

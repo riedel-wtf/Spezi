@@ -10,6 +10,7 @@ import OSLog
 import SpeziFoundation
 
 
+@available(iOS 17, *)
 final class ServiceModuleGroup: Sendable {
     private enum Input {
         case run(any ServiceModule)

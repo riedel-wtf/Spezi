@@ -9,6 +9,7 @@
 import UserNotifications
 
 
+@available(iOS 17, *)
 class SpeziNotificationCenterDelegate: NSObject {
 #if !os(tvOS)
     @MainActor
@@ -74,12 +75,15 @@ class SpeziNotificationCenterDelegate: NSObject {
 
 
 #if compiler(<6)
+@available(iOS 17, *)
 extension SpeziNotificationCenterDelegate: UNUserNotificationCenterDelegate {}
 #else
+@available(iOS 17, *)
 extension SpeziNotificationCenterDelegate: @preconcurrency UNUserNotificationCenterDelegate {}
 #endif
 
 
+@available(iOS 17, *)
 extension SpeziAppDelegate {
     func setupNotificationDelegate() {
         guard !spezi.notificationHandler.isEmpty else {

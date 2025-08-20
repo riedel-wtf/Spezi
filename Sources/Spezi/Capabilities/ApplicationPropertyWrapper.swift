@@ -11,6 +11,7 @@ import SwiftUI
 
 /// Access a property or action of the Spezi application.
 @propertyWrapper
+@available(iOS 17, *)
 public struct _ApplicationPropertyWrapper<Value> { // swiftlint:disable:this type_name
     private final class State {
         weak var spezi: Spezi?
@@ -42,6 +43,7 @@ public struct _ApplicationPropertyWrapper<Value> { // swiftlint:disable:this typ
 }
 
 
+@available(iOS 17, *)
 extension _ApplicationPropertyWrapper: SpeziPropertyWrapper {
     func inject(spezi: Spezi) {
         state.spezi = spezi
@@ -57,6 +59,7 @@ extension _ApplicationPropertyWrapper: SpeziPropertyWrapper {
 }
 
 
+@available(iOS 17, *)
 extension Module {
     /// Access a property or action of the application.
     ///

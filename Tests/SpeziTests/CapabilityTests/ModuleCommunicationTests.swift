@@ -12,6 +12,7 @@ import SpeziTesting
 import Testing
 
 
+@available(iOS 17, *)
 private final class ProvideModule1: Module {
     @Provide var num: Int = 2
     @Provide var numMaybe: Int? = 3
@@ -42,6 +43,7 @@ private final class CollectModule: Module {
 
 @Suite("Module Communication", .serialized)
 struct ModuleCommunicationTests {
+    @available(iOS 17, *)
     private class TestApplicationDelegate: SpeziAppDelegate {
         override var configuration: Configuration {
             Configuration {
@@ -51,18 +53,22 @@ struct ModuleCommunicationTests {
         }
     }
 
+    @available(iOS 17, *)
     @MainActor private static var provideModule = ProvideModule1()
     @MainActor private static var collectModule = CollectModule()
 
 
     @MainActor
     init() async throws {
-        Self.provideModule = ProvideModule1()
+        if #available(iOS 17, *) {
+            Self.provideModule = ProvideModule1()
+        }
         Self.collectModule = CollectModule()
     }
 
     @MainActor
     @Test("Simple Communication")
+    @available(iOS 17, *)
     func testSimpleCommunication() throws {
         let delegate = TestApplicationDelegate()
         _ = delegate.spezi // ensure init

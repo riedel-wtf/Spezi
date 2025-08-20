@@ -11,6 +11,7 @@ import SwiftUI
 
 /// Refer to the documentation of ``Module/Model``.
 @propertyWrapper
+@available(iOS 17, *)
 public class _ModelPropertyWrapper<Model: Observable & AnyObject> {
     // swiftlint:disable:previous type_name
     // We want the type to be hidden from autocompletion and documentation generation
@@ -59,6 +60,7 @@ public class _ModelPropertyWrapper<Model: Observable & AnyObject> {
 }
 
 
+@available(iOS 17, *)
 extension _ModelPropertyWrapper: SpeziPropertyWrapper {
     func clear() {
         collected = false
@@ -72,6 +74,7 @@ extension _ModelPropertyWrapper: SpeziPropertyWrapper {
 }
 
 
+@available(iOS 17, *)
 extension Module {
     /// Places an observable object in the global view environment.
     ///
@@ -101,6 +104,7 @@ extension Module {
 }
 
 
+@available(iOS 17, *)
 extension _ModelPropertyWrapper: ViewModifierProvider {
     var viewModifier: (any ViewModifier)? {
         collected = true

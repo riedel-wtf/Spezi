@@ -7,6 +7,7 @@
 //
 
 
+@available(iOS 17, *)
 extension Spezi {
     /// Access the global Spezi instance.
     ///

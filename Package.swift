@@ -16,7 +16,7 @@ let package = Package(
     name: "Spezi",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v17),
+        .iOS(.v15),
         .visionOS(.v1),
         .macOS(.v14),
         .tvOS(.v17),
@@ -28,8 +28,8 @@ let package = Package(
         .library(name: "XCTSpezi", targets: ["XCTSpezi"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.1.8"),
-        .package(url: "https://github.com/StanfordBDHG/XCTRuntimeAssertions.git", from: "2.0.0"),
+        .package(url: "https://github.com/riedel-wtf/SpeziFoundation.git", branch: "ios-15-deployment"),
+        .package(url: "https://github.com/riedel-wtf/XCTRuntimeAssertions.git", branch: "ios-15-deployment"),
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.1")
     ] + swiftLintPackage(),
     targets: [

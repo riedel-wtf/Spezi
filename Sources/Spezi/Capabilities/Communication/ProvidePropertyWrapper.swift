@@ -30,6 +30,7 @@ protocol OptionalBasedProvideProperty {
 
 /// Refer to the documentation of ``Module/Provide``.
 @propertyWrapper
+@available(iOS 17, *)
 public class _ProvidePropertyWrapper<Value> {
     // swiftlint:disable:previous type_name
     // We want the type to be hidden from autocompletion and documentation generation
@@ -74,6 +75,7 @@ public class _ProvidePropertyWrapper<Value> {
 }
 
 
+@available(iOS 17, *)
 extension Module {
     /// The `@Provide` property wrapper can be used to communicate data with other `Module`s.
     ///
@@ -130,6 +132,7 @@ extension Module {
 }
 
 
+@available(iOS 17, *)
 extension _ProvidePropertyWrapper: StorageValueProvider {
     public func collect<Repository: SharedRepository<SpeziAnchor>>(into repository: inout Repository) {
         if let wrapperWithOptional = self as? any OptionalBasedProvideProperty {
@@ -174,6 +177,7 @@ extension _ProvidePropertyWrapper: StorageValueProvider {
 }
 
 
+@available(iOS 17, *)
 extension _ProvidePropertyWrapper: CollectionBasedProvideProperty where Value: AnyArray {
     func collectArrayElements<Repository: SharedRepository<SpeziAnchor>>(into repository: inout Repository) {
         repository.setValues(for: id, storedValue.unwrappedArray)
@@ -185,6 +189,7 @@ extension _ProvidePropertyWrapper: CollectionBasedProvideProperty where Value: A
 }
 
 
+@available(iOS 17, *)
 extension _ProvidePropertyWrapper: OptionalBasedProvideProperty where Value: AnyOptional {
     func collectOptional<Repository: SharedRepository<SpeziAnchor>>(into repository: inout Repository) {
         if let storedValue = storedValue.unwrappedOptional {
@@ -198,6 +203,7 @@ extension _ProvidePropertyWrapper: OptionalBasedProvideProperty where Value: Any
 }
 
 
+@available(iOS 17, *)
 extension SharedRepository where Anchor == SpeziAnchor {
     fileprivate mutating func setValues<Value>(for id: UUID, _ values: [Value]) {
         var current = self[CollectedModuleValues<Value>.self]

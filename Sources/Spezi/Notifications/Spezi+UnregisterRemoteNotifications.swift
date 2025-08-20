@@ -14,9 +14,11 @@ import SwiftUI
 /// Refer to the documentation of ``Spezi/unregisterRemoteNotifications``.
 @_documentation(visibility: internal)
 @available(*, deprecated, renamed: "Spezi.UnregisterRemoteNotificationsAction", message: "Please use Spezi.UnregisterRemoteNotificationsAction")
+@available(iOS 17, *)
 public typealias UnregisterRemoteNotificationsAction = Spezi.UnregisterRemoteNotificationsAction
 
 
+@available(iOS 17, *)
 extension Spezi {
     /// Unregisters for all remote notifications received through Apple Push Notification service.
     ///

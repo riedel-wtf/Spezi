@@ -17,6 +17,7 @@ private enum DynamicDependenciesTestCase: CaseIterable {
     case duplicatedDependencies
     case noDependencies
     
+    @available(iOS 17, *)
     var dynamicDependencies: _DependencyPropertyWrapper<[any Module]> {
         switch self {
         case .twoDependencies:
@@ -66,6 +67,7 @@ private enum DynamicDependenciesTestCase: CaseIterable {
 }
 
 
+@available(iOS 17, *)
 private final class TestModule1: Module {
     @Dependency var dynamicDependencies: [any Module]
     let testCase: DynamicDependenciesTestCase
@@ -88,6 +90,7 @@ private final class TestModule3: Module {}
 struct DynamicDependenciesTests {
     @Test
     @MainActor
+    @available(iOS 17, *)
     func dynamicDependencies() throws {
         for dynamicDependenciesTestCase in DynamicDependenciesTestCase.allCases {
             let modules: [any Module] = [

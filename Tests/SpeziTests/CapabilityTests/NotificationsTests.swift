@@ -13,6 +13,7 @@ import UserNotifications
 
 
 @available(*, deprecated, message: "Forward decpreation warnings.")
+@available(iOS 17, *)
 private final class TestNotificationHandler: Module, NotificationHandler, NotificationTokenHandler {
     @Application(\.registerRemoteNotifications)
     var registerRemoteNotifications
@@ -77,6 +78,7 @@ private final class EmptyNotificationHandler: Module, NotificationHandler {}
 
 
 @available(*, deprecated, message: "Forward depcreation warnings")
+@available(iOS 17, *)
 private class TestNotificationApplicationDelegate: SpeziAppDelegate {
     private let injectedModule: TestNotificationHandler
 
@@ -98,6 +100,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Register Notifications Successfully")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testRegisterNotificationsSuccessful() async throws {
         let module = TestNotificationHandler()
         let delegate = TestNotificationApplicationDelegate(module)
@@ -127,6 +130,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Register Notifications Erroneous")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testRegisterNotificationsErroneous() async throws {
         enum TestError: Error, Equatable {
             case testError
@@ -165,6 +169,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Unregister Notifications")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testUnregisterNotifications() async throws {
         let module = TestNotificationHandler()
         let delegate = TestNotificationApplicationDelegate(module)
@@ -177,6 +182,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Remote Notification delivers no Data")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testRemoteNotificationDeliveryNoData() async {
         await confirmation { confirmation in
             let module = TestNotificationHandler(remoteNotificationConfirmation: confirmation)
@@ -200,6 +206,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Remote Notifications delivers Data")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testRemoteNotificationDeliveryNewData() async throws {
         await confirmation { confirmation in
             let module = TestNotificationHandler(remoteNotificationConfirmation: confirmation)
@@ -227,6 +234,7 @@ struct NotificationsTests {
     @MainActor
     @Test("Remote Notifications Delivery Failed")
     @available(*, deprecated, message: "Forward deprecation warnings")
+    @available(iOS 17, *)
     func testRemoteNotificationDeliveryFailed() async {
         await confirmation { confirmation in
             let module = TestNotificationHandler(remoteNotificationConfirmation: confirmation)

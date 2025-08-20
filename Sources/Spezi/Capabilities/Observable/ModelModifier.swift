@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-
+@available(iOS 17, *)
 struct ModelModifier<Model: Observable & AnyObject>: ViewModifier {
     @State private var model: Model
 

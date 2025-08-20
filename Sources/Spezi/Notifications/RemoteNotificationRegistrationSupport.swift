@@ -52,6 +52,7 @@ public final class RemoteNotificationRegistrationSupport: KnowledgeSource, Senda
         return false
     }
 
+    @available(iOS 16.0, *)
     public func callAsFunction() async throws -> Data {
         try await access.waitCheckingCancellation()
 
@@ -71,6 +72,7 @@ public final class RemoteNotificationRegistrationSupport: KnowledgeSource, Senda
 }
 
 
+@available(iOS 17, *)
 extension Spezi {
     /// Provides support to call the `registerForRemoteNotifications()` method on the application.
     ///

@@ -33,6 +33,7 @@ public struct LaunchOptionsKey: DefaultProvidingKnowledgeSource {
 }
 
 
+@available(iOS 17, *)
 extension Spezi {
 #if os(iOS) || os(visionOS) || os(tvOS)
     /// The launch options of the application.

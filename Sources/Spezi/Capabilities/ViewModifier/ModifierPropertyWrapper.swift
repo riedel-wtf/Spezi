@@ -11,6 +11,7 @@ import SwiftUI
 
 /// Refer to the documentation of ``Module/Modifier``.
 @propertyWrapper
+@available(iOS 17, *)
 public class _ModifierPropertyWrapper<Modifier: ViewModifier> {
     // swiftlint:disable:previous type_name
     // We want the type to be hidden from autocompletion and documentation generation
@@ -57,6 +58,7 @@ public class _ModifierPropertyWrapper<Modifier: ViewModifier> {
 }
 
 
+@available(iOS 17, *)
 extension _ModifierPropertyWrapper: SpeziPropertyWrapper {
     func clear() {
         collected = false
@@ -69,6 +71,7 @@ extension _ModifierPropertyWrapper: SpeziPropertyWrapper {
 }
 
 
+@available(iOS 17, *)
 extension Module {
     /// Provide a SwiftUI `ViewModifier` to modify the global view hierarchy.
     ///
@@ -100,6 +103,7 @@ extension Module {
 }
 
 
+@available(iOS 17, *)
 extension _ModifierPropertyWrapper: ViewModifierProvider {
     var viewModifier: (any ViewModifier)? {
         collected = true

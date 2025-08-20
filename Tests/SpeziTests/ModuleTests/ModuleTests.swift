@@ -12,6 +12,7 @@ import SwiftUI
 import Testing
 
 
+@available(iOS 17, *)
 private final class DependingTestModule: Module {
     let confirmation: Confirmation?
     @Dependency var module = TestModule()
@@ -33,6 +34,7 @@ private final class DependingTestModule: Module {
 struct ModuleTests {
     @MainActor
     @Test("Module Flow")
+    @available(iOS 17, *)
     func testModuleFlow() async {
         await confirmation { confirmation in
             _ = Text("Spezi")
@@ -42,6 +44,7 @@ struct ModuleTests {
 
     @MainActor
     @Test("Spezi")
+    @available(iOS 17, *)
     func testSpezi() throws {
         let spezi = Spezi(standard: DefaultStandard(), modules: [DependingTestModule()])
 
@@ -54,6 +57,7 @@ struct ModuleTests {
 
     @MainActor
     @Test("Preview Modifier")
+    @available(iOS 17, *)
     func testPreviewModifier() async throws {
         // manually patch environment variable for running within Xcode preview window
         setenv(ProcessInfo.xcodeRunningForPreviewKey, "1", 1)
@@ -72,6 +76,7 @@ struct ModuleTests {
 
     @MainActor
     @Test("Module Creation")
+    @available(iOS 17, *)
     func testModuleCreation() async {
         await confirmation { moduleConfirmation in
             await confirmation { dependencyConfirmation in

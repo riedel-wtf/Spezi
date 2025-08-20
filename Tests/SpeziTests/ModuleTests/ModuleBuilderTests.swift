@@ -52,7 +52,7 @@ final class ModuleBuilderTests: XCTestCase {
         }
     }
     
-    
+    @available(iOS 17, *)
     private func modules(loopLimit: Int, condition: Bool, expectations: Expectations) -> ModuleCollection {
         @ModuleBuilder
         var modules: ModuleCollection {
@@ -79,6 +79,7 @@ final class ModuleBuilderTests: XCTestCase {
     
 
     @MainActor
+    @available(iOS 17, *)
     func testModuleBuilderIf() throws {
         let expectations = Expectations(xctestCase: self)
         expectations.loopTestExpectation.expectedFulfillmentCount = 5
@@ -98,6 +99,7 @@ final class ModuleBuilderTests: XCTestCase {
     }
 
     @MainActor
+    @available(iOS 17, *)
     func testModuleBuilderElse() throws {
         let expectations = Expectations(xctestCase: self)
         expectations.conditionalTestExpectation.isInverted = true

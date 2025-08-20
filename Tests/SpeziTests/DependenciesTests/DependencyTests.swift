@@ -11,7 +11,7 @@ import SwiftUI
 import XCTest
 import XCTRuntimeAssertions
 
-
+@available(iOS 17, *)
 private final class TestModule1: Module {
     let deinitExpectation: XCTestExpectation
 
@@ -31,6 +31,7 @@ private final class TestModule1: Module {
     }
 }
 
+@available(iOS 17, *)
 private final class TestModuleX: Module {
     @Provide var numX: Int
 
@@ -39,6 +40,7 @@ private final class TestModuleX: Module {
     }
 }
 
+@available(iOS 17, *)
 private final class TestModule2: Module {
     @Dependency var testModule4 = TestModule4()
     @Dependency var testModule5 = TestModule5()
@@ -47,6 +49,7 @@ private final class TestModule2: Module {
     @Provide var num: Int = 2
 }
 
+@available(iOS 17, *)
 private final class TestModule3: Module, DefaultInitializable, EnvironmentAccessible {
     // EnvironmentAccessible conformance tests that `ModelModifier(model: self)` are removed and no memory leaks occur in Module unloading
     let state: Int
@@ -68,29 +71,34 @@ private final class TestModule3: Module, DefaultInitializable, EnvironmentAccess
     }
 }
 
+@available(iOS 17, *)
 private final class TestModule4: Module {
     @Dependency var testModule5 = TestModule5()
 
     @Provide var num: Int = 4
 }
 
+@available(iOS 17, *)
 private final class TestModule5: Module {
     @Provide var num: Int = 5
 }
 
+@available(iOS 17, *)
 private final class TestModule6: Module {}
 
+@available(iOS 17, *)
 private final class TestModule7: Module {
     @Dependency var testModule1 = TestModule1()
 }
 
-
+@available(iOS 17, *)
 private final class OptionalModuleDependency: Module {
     @Dependency(TestModule3.self) var testModule3: TestModule3?
 
     @Collect var nums: [Int]
 }
 
+@available(iOS 17, *)
 private final class AllPropertiesModule: Module {
     @Observable
     class MyModel {}
@@ -110,6 +118,7 @@ private final class AllPropertiesModule: Module {
     @StandardActor var defaultStandard: any Standard
 }
 
+@available(iOS 17, *)
 private final class OptionalDependencyWithRuntimeDefault: Module {
     @Dependency(TestModule3.self) var testModule3: TestModule3?
 
@@ -120,17 +129,20 @@ private final class OptionalDependencyWithRuntimeDefault: Module {
     }
 }
 
+@available(iOS 17, *)
 private final class TestModule8: Module {
     @Dependency(TestModule1.self) var testModule1: TestModule1?
 
     init() {}
 }
 
+@available(iOS 17, *)
 private final class SimpleOptionalModuleDependency: Module {
     @Dependency(TestModule6.self) var testModule6: TestModule6?
 }
 
 
+@available(iOS 17, *)
 private final class ModuleWithRequiredDependency: Module {
     final class NestedX: Module, DefaultInitializable {
         @Dependency var testModuleX = TestModuleX(12)
@@ -153,6 +165,7 @@ private final class ModuleWithRequiredDependency: Module {
 }
 
 
+@available(iOS 17, *)
 private final class InjectionOfOptionalDefaultValue: Module {
     final class NestedX: Module {
         @Dependency var testModuleX = TestModuleX(23)
@@ -163,6 +176,7 @@ private final class InjectionOfOptionalDefaultValue: Module {
     init() {}
 }
 
+@available(iOS 17, *)
 private final class TestModuleCircle1: Module {
     @Dependency var modules: [any Module]
 
@@ -175,6 +189,7 @@ private final class TestModuleCircle1: Module {
     }
 }
 
+@available(iOS 17, *)
 private final class TestModuleCircle2: Module {
     @Dependency var module = TestModuleCircle1()
 }
@@ -182,6 +197,7 @@ private final class TestModuleCircle2: Module {
 
 // Test that deprecated declaration still compile as expected
 @available(*, deprecated, message: "Propagate deprecation warning")
+@available(iOS 17, *)
 private final class DeprecatedDeclarations: Module {
     @Dependency var testModule3: TestModule3
     @Dependency var testModule6: TestModule6?
@@ -194,6 +210,7 @@ func getModule<M: Module>(_ module: M.Type = M.self, in modules: [any Module], f
 }
 
 
+@available(iOS 17, *)
 final class DependencyTests: XCTestCase { // swiftlint:disable:this type_body_length
     @MainActor
     func testLoadingAdditionalDependency() throws {

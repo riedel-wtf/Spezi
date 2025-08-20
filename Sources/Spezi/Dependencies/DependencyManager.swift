@@ -11,6 +11,7 @@ import RuntimeAssertions
 
 /// Gather information about modules with dependencies.
 @MainActor
+@available(iOS 17, *)
 public class DependencyManager: Sendable {
     /// Collection of already initialized modules.
     private let existingModules: [any Module]

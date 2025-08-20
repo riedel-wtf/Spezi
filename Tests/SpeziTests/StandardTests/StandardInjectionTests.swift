@@ -12,6 +12,7 @@ import XCTest
 import XCTRuntimeAssertions
 
 
+@available(iOS 17, *)
 final class StandardInjectionTests: XCTestCase {
     final class StandardInjectionTestModule: Module {
         @StandardActor var standard: MockStandard

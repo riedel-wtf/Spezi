@@ -7,6 +7,7 @@
 //
 
 
+@available(iOS 17, *)
 extension Module {
     /// Define dependency to other `Module`s.
     ///

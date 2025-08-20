@@ -11,6 +11,7 @@
 ///
 /// For more information refer to ``DependencyCollection``.
 @resultBuilder
+@available(iOS 17, *)
 public enum DependencyBuilder: DependencyCollectionBuilder {
     /// An auto-closure expression, providing the default dependency value, building the `DependencyCollection`.
     public static func buildExpression<M: Module>(_ expression: M) -> DependencyCollection {

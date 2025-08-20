@@ -10,6 +10,7 @@ import os
 import SpeziFoundation
 
 
+@available(iOS 17, *)
 extension Spezi {
     /// Access the application logger.
     ///

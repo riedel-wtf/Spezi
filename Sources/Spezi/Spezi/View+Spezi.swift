@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 
+@available(iOS 17, *)
 struct SpeziViewModifier: ViewModifier {
     @State private var spezi: Spezi
     
@@ -27,6 +28,7 @@ struct SpeziViewModifier: ViewModifier {
 }
 
 
+@available(iOS 17, *)
 extension View {
     /// Configure Spezi for your application using a delegate.
     /// - Parameter delegate: The ``SpeziAppDelegate`` used in the SwiftUI App instance.

@@ -38,6 +38,7 @@ public protocol DependencyCollectionBuilder {}
 
 
 /// Default protocol implementations of a result builder constructing a ``DependencyCollection``.
+@available(iOS 17, *)
 extension DependencyCollectionBuilder {
     /// Build a block of `DependencyCollection`s.
     public static func buildBlock(_ components: DependencyCollection...) -> DependencyCollection {

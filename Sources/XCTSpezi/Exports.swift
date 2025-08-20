@@ -13,6 +13,7 @@ import SpeziTesting
 /// Legacy implementation.
 @MainActor
 @available(*, deprecated, message: "Please migrate to the 'SpeziTesting' library.")
+@available(iOS 17, *)
 public func withDependencyResolution<S: Standard>(
     standard: S,
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
@@ -24,6 +25,7 @@ public func withDependencyResolution<S: Standard>(
 /// Legacy implementation.
 @MainActor
 @available(*, deprecated, message: "Please migrate to the 'SpeziTesting' library.")
+@available(iOS 17, *)
 public func withDependencyResolution(
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
     @ModuleBuilder _ modules: () -> ModuleCollection

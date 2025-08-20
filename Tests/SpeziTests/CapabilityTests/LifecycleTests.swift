@@ -12,6 +12,7 @@ import Testing
 
 
 @available(*, deprecated, message: "Propagate deprecation warning")
+@available(iOS 17, *)
 private final class TestLifecycleHandler: Module, LifecycleHandler {
     var willFinishLaunchingWithOptionConfirmation: Confirmation? // swiftlint:disable:this identifier_name
     var willTerminateConfirmation: Confirmation?
@@ -41,6 +42,7 @@ private final class TestLifecycleHandler: Module, LifecycleHandler {
 private final class EmptyLifecycleHandler: Module, LifecycleHandler { }
 
 @available(*, deprecated, message: "Propagate deprecation warning")
+@available(iOS 17, *)
 private class TestLifecycleHandlerApplicationDelegate: SpeziAppDelegate {
     private let injectedModule: TestLifecycleHandler
     
@@ -63,6 +65,7 @@ struct LifecycleTests {
     @MainActor
     @available(*, deprecated, message: "Propagate deprecation warning")
     @Test("UIApplication Lifecycle Methods")
+    @available(iOS 17, *)
     func testUIApplicationLifecycleMethods() async throws {
         let module = TestLifecycleHandler()
         let testApplicationDelegate = TestLifecycleHandlerApplicationDelegate(injectedModule: module)

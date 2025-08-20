@@ -28,9 +28,10 @@ import SwiftUI
 ///     }
 /// }
 /// ```
+@available(iOS 17, *)
 public protocol EnvironmentAccessible: AnyObject, Observable {}
 
-
+@available(iOS 17, *)
 extension EnvironmentAccessible {
     @MainActor var viewModifier: any ViewModifier {
         ModelModifier(model: self)

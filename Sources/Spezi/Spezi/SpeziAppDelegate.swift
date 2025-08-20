@@ -49,6 +49,7 @@ import SwiftUI
 /// The ``Module`` documentation provides more information about the structure of modules.
 /// Refer to the ``Configuration`` documentation to learn more about the Spezi configuration.
 @MainActor // need to be made explicit, macOS NSApplicationDelegate has @MainActor individually specified for each method
+@available(iOS 17, *)
 open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
     private(set) static weak var appDelegate: SpeziAppDelegate?
     static var notificationDelegate: SpeziNotificationCenterDelegate? // swiftlint:disable:this weak_delegate

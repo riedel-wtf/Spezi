@@ -17,6 +17,7 @@ private protocol ExampleConstraint: Standard {
 }
 
 
+@available(iOS 17, *)
 final class StandardConstraintTests: XCTestCase {
     final class StandardCTestModule: Module {
         @StandardActor private var standard: any ExampleConstraint

@@ -10,6 +10,7 @@ import SwiftUI
 
 
 #if os(iOS) || os(visionOS) || os(tvOS)
+@available(iOS 17, *)
 class SpeziSceneDelegate: NSObject, UISceneDelegate {
     @available(*, deprecated, message: "Propagate deprecation warning.")
     func sceneWillEnterForeground(_ scene: UIScene) {

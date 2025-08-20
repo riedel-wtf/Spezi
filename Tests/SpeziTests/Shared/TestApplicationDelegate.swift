@@ -13,6 +13,7 @@ import Testing
 import XCTest
 
 
+@available(iOS 17, *)
 public class TestApplicationDelegate: SpeziAppDelegate {
     let confirmation: Confirmation?
     let expectation: XCTestExpectation

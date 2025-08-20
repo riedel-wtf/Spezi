@@ -30,6 +30,7 @@ private protocol ModuleArrayDependency {
 
 /// Refer to the documentation of ``Module/Dependency`` for information on how to use the `@Dependency` property wrapper.
 @propertyWrapper
+@available(iOS 17, *)
 public class _DependencyPropertyWrapper<Value> { // swiftlint:disable:this type_name
     private weak var spezi: Spezi?
     private let dependencies: DependencyCollection
@@ -93,7 +94,7 @@ public class _DependencyPropertyWrapper<Value> { // swiftlint:disable:this type_
     }
 }
 
-
+@available(iOS 17, *)
 extension _DependencyPropertyWrapper: SpeziPropertyWrapper {
     func inject(spezi: Spezi) {
         self.spezi = spezi
@@ -108,7 +109,7 @@ extension _DependencyPropertyWrapper: SpeziPropertyWrapper {
     }
 }
 
-
+@available(iOS 17, *)
 extension _DependencyPropertyWrapper: DependencyDeclaration {
     var unsafeInjectedModules: [any Module] {
         dependencies.unsafeInjectedModules
@@ -136,6 +137,7 @@ extension _DependencyPropertyWrapper: DependencyDeclaration {
 }
 
 
+@available(iOS 17, *)
 extension _DependencyPropertyWrapper: SingleModuleDependency where Value: Module {
     /// Create a required dependency.
     ///
@@ -166,6 +168,7 @@ extension _DependencyPropertyWrapper: SingleModuleDependency where Value: Module
 }
 
 
+@available(iOS 17, *)
 extension _DependencyPropertyWrapper: OptionalModuleDependency where Value: AnyOptional, Value.Wrapped: Module {
     /// Create a empty, optional dependency.
     @available(*, deprecated, renamed: "init(_:)", message: "Please specify the Wrapped type of your optional dependency as the first argument.")
@@ -183,6 +186,7 @@ extension _DependencyPropertyWrapper: OptionalModuleDependency where Value: AnyO
 }
 
 
+@available(iOS 17, *)
 extension _DependencyPropertyWrapper: ModuleArrayDependency where Value == [any Module] {
     /// Initialize an empty collection of dependencies.
     @_disfavoredOverload

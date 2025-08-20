@@ -19,6 +19,7 @@ import SwiftUI
 ///   - simulateLifecycle: Options to simulate behavior for [`LifecycleHandler`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/lifecyclehandler)s.
 ///   - modules: The collection of Modules that are configured.
 @MainActor
+@available(iOS 17, *)
 public func withDependencyResolution<S: Standard>(
     standard: S,
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
@@ -48,6 +49,7 @@ public func withDependencyResolution<S: Standard>(
 ///   - simulateLifecycle: Options to simulate behavior for [`LifecycleHandler`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/lifecyclehandler)s.
 ///   - modules: The collection of Modules that are configured.
 @MainActor
+@available(iOS 17, *)
 public func withDependencyResolution(
     simulateLifecycle: LifecycleSimulationOptions = .disabled,
     @ModuleBuilder _ modules: () -> ModuleCollection

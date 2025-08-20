@@ -15,6 +15,7 @@ private final class ExampleModule: Module {}
 @Suite
 struct DependencyContextTests {
     @Test
+    @available(iOS 17, *)
     func injectionPreconditionDependencyPropertyWrapper() throws {
         expectRuntimePrecondition {
             _ = _DependencyPropertyWrapper<TestModule>(wrappedValue: TestModule(), TestModule.self).wrappedValue
@@ -22,6 +23,7 @@ struct DependencyContextTests {
     }
     
     @Test
+    @available(iOS 17, *)
     func injectionPreconditionDynamicDependenciesPropertyWrapper() throws {
         expectRuntimePrecondition {
             _ = _DependencyPropertyWrapper {

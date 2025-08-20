@@ -14,6 +14,7 @@ private protocol ExampleTypeConstraint: Module {}
 private final class ExampleDependentModule: ExampleTypeConstraint {}
 
 @resultBuilder
+@available(iOS 17, *)
 private enum ExampleDependencyBuilder: DependencyCollectionBuilder {
     /// An auto-closure expression, providing the default dependency value, building the ``DependencyCollection``.
     static func buildExpression<L: ExampleTypeConstraint>(_ expression: L) -> DependencyCollection {
@@ -21,6 +22,7 @@ private enum ExampleDependencyBuilder: DependencyCollectionBuilder {
     }
 }
 
+@available(iOS 17, *)
 class ExampleDependencyModule: Module {
     @Dependency var dependencies: [any Module]
     
@@ -34,6 +36,7 @@ class ExampleDependencyModule: Module {
 struct DependencyBuilderTests {
     @Test
     @MainActor
+    @available(iOS 17, *)
     func dependencyCollection() {
         var collection = DependencyCollection(ExampleDependentModule())
         #expect(collection.count == 1)
@@ -46,6 +49,7 @@ struct DependencyBuilderTests {
     @Test
     @available(*, deprecated, message: "Propagate deprecation warning.")
     @MainActor
+    @available(iOS 17, *)
     func deprecatedInits() {
         let collection1 = DependencyCollection(singleEntry: ExampleDependentModule())
         let collection2 = DependencyCollection(singleEntry: {
@@ -58,6 +62,7 @@ struct DependencyBuilderTests {
 
     @Test
     @MainActor
+    @available(iOS 17, *)
     func dependencyBuilder() throws {
         let module = ExampleDependencyModule {
             ExampleDependentModule()

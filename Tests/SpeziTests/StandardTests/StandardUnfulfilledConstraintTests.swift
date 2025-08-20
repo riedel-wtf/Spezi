@@ -29,6 +29,7 @@ struct StandardUnfulfilledConstraintTests {
     
     @Test
     @MainActor
+    @available(iOS 17, *)
     func standardUnfulfilledConstraint() throws {
         let configuration = Configuration(standard: MockStandard()) {}
         let spezi = Spezi(from: configuration)

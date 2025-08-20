@@ -21,6 +21,7 @@ struct TestViewModifier: ViewModifier {
 }
 
 
+@available(iOS 17, *)
 public final class TestModule: Module {
     let confirmation: Confirmation?
     let expectation: XCTestExpectation

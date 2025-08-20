@@ -42,6 +42,7 @@ public enum LifecycleSimulationOptions {
 
 
 #if os(iOS) || os(visionOS) || os(tvOS)
+@available(iOS 17, *)
 extension Spezi: DeprecatedLaunchOptionsCall {
     @available(*, deprecated, message: "Propagate deprecation warning.")
     package func callWillFinishLaunching(_ application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]) {
@@ -66,6 +67,7 @@ extension View {
     ///   - modules: The ``Module``s used in the Spezi project.
     /// - Returns: The configured view using the Spezi framework.
     @MainActor
+    @available(iOS 17, *)
     public func previewWith<S: Standard>(
         standard: S,
         simulateLifecycle: LifecycleSimulationOptions = .disabled,
@@ -108,6 +110,7 @@ extension View {
     ///   - modules: The ``Module``s used in the Spezi project.
     /// - Returns: The configured view using the Spezi framework.
     @MainActor
+    @available(iOS 17, *)
     public func previewWith(
         simulateLifecycle: LifecycleSimulationOptions = .disabled,
         @ModuleBuilder _ modules: () -> ModuleCollection

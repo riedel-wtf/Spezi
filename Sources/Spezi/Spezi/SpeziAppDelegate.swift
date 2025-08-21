@@ -49,9 +49,12 @@ import SwiftUI
 /// The ``Module`` documentation provides more information about the structure of modules.
 /// Refer to the ``Configuration`` documentation to learn more about the Spezi configuration.
 @MainActor // need to be made explicit, macOS NSApplicationDelegate has @MainActor individually specified for each method
-@available(iOS 17, *)
 open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
+    
+    @available(iOS 17, *)
     private(set) static weak var appDelegate: SpeziAppDelegate?
+    
+    @available(iOS 17, *)
     static var notificationDelegate: SpeziNotificationCenterDelegate? // swiftlint:disable:this weak_delegate
 
     /// Access the Spezi instance.
@@ -59,20 +62,21 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
     /// Use this property as a basis for creating your own APIs (e.g., providing SwiftUI Environment values that use information from Spezi).
     /// To not make it directly available to the user.
     @_spi(APISupport)
+    @available(iOS 17, *)
     public static var spezi: Spezi? {
-        SpeziAppDelegate.appDelegate?._spezi
+        SpeziAppDelegate.appDelegate?._spezi as? Spezi
     }
 
-    private(set) var _spezi: Spezi? // swiftlint:disable:this identifier_name
+    private(set) var _spezi: Any? = nil // swiftlint:disable:this identifier_name
 
-
+    @available(iOS 17, *)
     var spezi: Spezi {
         guard let spezi = _spezi else {
             let spezi = Spezi(from: configuration)
             self._spezi = spezi
             return spezi
         }
-        return spezi
+        return spezi as! Spezi
     }
 
 
@@ -94,6 +98,7 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
     ///
     /// The ``Module`` documentation provides more information about the structure of modules.
     /// Refer to the ``Configuration`` documentation to learn more about the Spezi configuration.
+    @available(iOS 17, *)
     open var configuration: Configuration {
         Configuration { }
     }
@@ -118,16 +123,19 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
             return true
         }
 
-        precondition(_spezi == nil, "\(#function) was called when Spezi was already initialized. Unable to pass options!")
-
-        var storage = SpeziStorage()
-        storage[LaunchOptionsKey.self] = launchOptions
-        self._spezi = Spezi(from: configuration, storage: storage)
-
-        // backwards compatibility
-        spezi.lifecycleHandler.willFinishLaunchingWithOptions(application, launchOptions: launchOptions ?? [:])
-
-        setupNotificationDelegate()
+        if #available(iOS 17, *) {
+            precondition(_spezi == nil, "\(#function) was called when Spezi was already initialized. Unable to pass options!")
+            
+            var storage = SpeziStorage()
+            storage[LaunchOptionsKey.self] = launchOptions
+            self._spezi = Spezi(from: configuration, storage: storage)
+            
+            // backwards compatibility
+            spezi.lifecycleHandler.willFinishLaunchingWithOptions(application, launchOptions: launchOptions ?? [:])
+            
+            setupNotificationDelegate()
+        }
+        
         return true
     }
 #elseif os(macOS)
@@ -153,50 +161,63 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
 
     open func application(_ application: _Application, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         MainActor.assumeIsolated { // on macOS there is a missing MainActor annotation
-            spezi.remoteNotificationRegistrationSupport.handleDeviceTokenUpdate(deviceToken)
-
-            // notify all notification handlers of an updated token
-            for handler in spezi.notificationTokenHandler {
-                handler.receiveUpdatedDeviceToken(deviceToken)
+            if #available(iOS 17, *) {
+                spezi.remoteNotificationRegistrationSupport.handleDeviceTokenUpdate(deviceToken)
+                
+                // notify all notification handlers of an updated token
+                for handler in spezi.notificationTokenHandler {
+                    handler.receiveUpdatedDeviceToken(deviceToken)
+                }
+                
             }
         }
     }
 
     open func application(_ application: _Application, didFailToRegisterForRemoteNotificationsWithError error: any Error) {
-        MainActor.assumeIsolated { // on macOS there is a missing MainActor annotation
-            spezi.remoteNotificationRegistrationSupport.handleFailedRegistration(error)
+        if #available(iOS 17, *) {
+            MainActor.assumeIsolated { // on macOS there is a missing MainActor annotation
+                spezi.remoteNotificationRegistrationSupport.handleFailedRegistration(error)
+            }
         }
     }
 
 #if !os(macOS)
     private func handleReceiveRemoteNotification(_ userInfo: [AnyHashable: Any]) async -> BackgroundFetchResult {
-        let handlers = spezi.notificationHandler
-        guard !handlers.isEmpty else {
-            return .noData
-        }
-
-        let result: Set<BackgroundFetchResult> = await withTaskGroup(of: BackgroundFetchResult.self) { @MainActor group in
-            for handler in handlers {
-                group.addTask { @Sendable @MainActor in
-                    await handler.receiveRemoteNotification(userInfo)
+        
+        if #available(iOS 17, *) {
+            
+            let handlers = spezi.notificationHandler
+            guard !handlers.isEmpty else {
+                return .noData
+            }
+            
+            let result: Set<BackgroundFetchResult> = await withTaskGroup(of: BackgroundFetchResult.self) { @MainActor group in
+                for handler in handlers {
+                    group.addTask { @Sendable @MainActor in
+                        await handler.receiveRemoteNotification(userInfo)
+                    }
                 }
+                
+                var result: Set<BackgroundFetchResult> = []
+                for await fetchResult in group {
+                    // don't ask why, but the `for in` or `reduce(into:_:)` versions trigger Swift 6 concurrency warnings, this one doesn't
+                    result.insert(fetchResult)
+                }
+                return result
             }
-
-            var result: Set<BackgroundFetchResult> = []
-            for await fetchResult in group {
-                // don't ask why, but the `for in` or `reduce(into:_:)` versions trigger Swift 6 concurrency warnings, this one doesn't
-                result.insert(fetchResult)
+            
+            if result.contains(.failed) {
+                return .failed
+            } else if result.contains(.newData) {
+                return .newData
+            } else {
+                return .noData
             }
-            return result
-        }
-
-        if result.contains(.failed) {
-            return .failed
-        } else if result.contains(.newData) {
-            return .newData
+            
         } else {
             return .noData
         }
+        
     }
 #endif
 
@@ -228,14 +249,20 @@ open class SpeziAppDelegate: NSObject, ApplicationDelegate, Sendable {
         options: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
         let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
-        Self.appDelegate = self
-        sceneConfig.delegateClass = SpeziSceneDelegate.self
+        
+        if #available(iOS 17, *) {
+            Self.appDelegate = self
+            sceneConfig.delegateClass = SpeziSceneDelegate.self
+        }
+        
         return sceneConfig
     }
 
     @available(*, deprecated, message: "Propagate deprecation warning.")
     open func applicationWillTerminate(_ application: UIApplication) {
-        spezi.lifecycleHandler.applicationWillTerminate(application)
+        if #available(iOS 17, *) {
+            spezi.lifecycleHandler.applicationWillTerminate(application)
+        }
     }
 #endif
 }
